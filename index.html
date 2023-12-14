@@ -15,33 +15,29 @@
                 </div>
             </div>
             <div class="add-book-closed">
-                <img id="add-book-closed" src="assets/add button.svg" alt="" width="35px" style="cursor: pointer;">
+                <img id="add-book-closed" src="assets/add button.svg" alt="Tambah Buku" width="35px" style="cursor: pointer;">
             </div>
             <div class="profile-user">
                 <div class="profile-icon">
-                    <img src="assets/profile icon.svg" alt="" width="70px">
+                    <img src="assets/profile icon.svg" alt="Profile" width="70px">
                 </div>
                 <div class="profile-detail">
                     <div class="name">Sri Fitri Yani Nurhasanah</div>
-                    <div class="title">21y/o, Student</div>
+                    <div class="title">22y/o, Student</div>
                 </div>
             </div>
             <div class="add-book">
-                <img id="add-book" src="assets/add button.svg" alt="" width="40px">
+                <img id="add-book" src="assets/add button.svg" alt="Tambah Buku" width="40px">
             </div>
             <div class="unread-books">
                 <div class="unread-progress">
-                    <i class='bx bxs-circle'>
-                        <span class="count"></span>
-                    </i>
+                    <span class="count" id="count-unread"></span>
                 </div>
                 <div class="unread-text">Buku sedang dibaca.</div>
             </div>
             <div class="read-books">
                 <div class="read-progress">
-                    <i class='bx bxs-circle'>
-                        <span class="count"></span>
-                    </i>
+                    <span class="count" id="count-read"></span>
                 </div>
                 <div class="read-text">Buku selesai dibaca.</div>
             </div>
@@ -50,70 +46,42 @@
             <div class="top-page">
                 <div class="filter-page">
                     <ul class="tabs">
-                        <li onclick="tabFunctionUncomplete()" class="tab active" data-target="#one">Sedang Dibaca</li>
-                        <li onclick="tabFunctionComplete()" class="tab " data-target="#two">Selesai Dibaca</li>
+                        <li class="tab active" data-target="panel_one">Sedang Dibaca</li>
+                        <li class="tab" data-target="panel_two">Selesai Dibaca</li>
                     </ul>
                 </div>
                 <div class="search-bar">
-                    
+                    <input id="search" type="text" placeholder="Cari..">
                 </div>
             </div>
-            <!-- <div class="main-page">
-                <div class="deafult-page">
-                    <img src="assets/warn icon.svg" alt="" width="30px">
-                    <div class="deafult-page-text">Kamu belum menambahkan buku.</div>
-                </div>
-            </div> -->
-            <div class="panel active one" id="one">
-                <!-- <div class="books-container">
-                    <div class="book-details">
-                        <div class="book-name">Hukum Administrasi Negara</div>
-                        <div class="book-author">Yos Johan Utama</div>
-                        <div class="book-year">2022</div>
-                    </div>
-                    <div class="icons">
-                        <div class="edit-icon"><img src="assets/edit icon.svg" alt="Edit"></div>
-                        <div class="selesai-icon"><img src="assets/checklist icon.svg" alt="Selesai"></div>
-                        <div class="hapus-icon"><img src="assets/trash icon.svg" alt="Hapus"></div>
-                    </div>
-                </div> -->
-            </div>
-            
-            <div class="panel two" id="two">
-                <!-- <div class="books-container">
-                    <div class="selesai-progress" id="selesai-progress">
-                        <img src="assets/progress circle.svg" alt="">
-                    </div>
-                    <div class="book-details">
-                        <div class="date"></div>
-                        <div class="book-name"></div>
-                        <div class="book-author"></div>
-                        <div class="book-year"></div>
-                    </div>
-                    <div class="icons">
-                        <img src="assets/edit icon.svg" alt="Edit">
-                        <img src="assets/trash icon.svg" alt="Hapus">
-                    </div> -->
-                </div>
-            </div>
-            <div class="add-book-form" id="add-book-form">
-                <form action="#" class="form-container" id="form-container">
-                    <h1>Tambahkan Buku</h1>
-                    <br>
-                    <input type="text" id="book-title" placeholder="Masukan Judul Buku" required><br>
-                    <input type="text" id="book-author" placeholder="Masukan Penulis Buku" required><br>
-                    <input type="number" placeholder="Masukan Tahun Terbit" id="book-year" required><br>
-                    <div class="checkbox-container">
-                        <input type="checkbox" class="form-checkbox" id="selesai-baca" name="selesai" value="selesai" onclick="checkedOnClick(this);"> 
-                        <label for="selesai">Selesai Membaca</label>
-                    </div>
-                    <div class="form-button">
-                        <button id="form-close-button">Batal</button>
-                        <button id="form-submit-button" type="submit" value="Submit" name="Submit">Tambah</button>
-                    </div>
-                </form>
-            </div>
+            <div id="default-page"></div>
+            <div id="content-container"></div>
         </section>
+        <div class="add-book-form" id="add-book-form">
+            <form id="form-container">
+                <h1 id="title-form">Tambahkan Buku</h1>
+                <br>
+                <input type="text" id="book-title" placeholder="Masukan Judul Buku" required><br>
+                <input type="text" id="book-author" placeholder="Masukan Penulis Buku" required><br>
+                <input type="number" id="book-year" placeholder="Masukan Tahun Terbit" required><br>
+                <div class="checkbox-container">
+                    <input type="checkbox" class="form-checkbox" id="selesai-baca" name="selesai" value="selesai"> 
+                    <label for="selesai">Selesai Membaca</label>
+                </div>
+                <div class="form-button">
+                    <button type="button" id="form-close-button">Batal</button>
+                    <button id="form-submit-button" type="submit" value="Submit" name="Submit"></button>
+                </div>
+            </form>
+        </div>
+        <div class="modal" id="delete-modal">
+            <h4 class="modal-title">Hapus buku?</h4>
+            <p class="modal-body">Setelah dihapus, buku tidak dapat dikembalikan.</p>
+            <div class="modal-button">
+                <button id="back-button">Kembali</button>
+                <button id="delete-button">Hapus</button>
+            </div>
+        </div>
         <script src="js/script.js"></script>
     </body>
 </html>
