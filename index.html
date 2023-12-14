@@ -15,33 +15,29 @@
                 </div>
             </div>
             <div class="add-book-closed">
-                <img id="add-book-closed" src="assets/add button.svg" alt="" width="35px" style="cursor: pointer;">
+                <img id="add-book-closed" src="assets/add button.svg" alt="Tambah Buku" width="35px" style="cursor: pointer;">
             </div>
             <div class="profile-user">
                 <div class="profile-icon">
-                    <img src="assets/profile icon.svg" alt="" width="70px">
+                    <img src="assets/profile icon.svg" alt="Profile" width="70px">
                 </div>
                 <div class="profile-detail">
                     <div class="name">Sri Fitri Yani Nurhasanah</div>
-                    <div class="title">21y/o, Student</div>
+                    <div class="title">22y/o, Student</div>
                 </div>
             </div>
             <div class="add-book">
-                <img id="add-book" src="assets/add button.svg" alt="" width="40px">
+                <img id="add-book" src="assets/add button.svg" alt="Tambah Buku" width="40px">
             </div>
             <div class="unread-books">
                 <div class="unread-progress">
-                    <i class='bx bxs-circle'>
-                        <span class="count"></span>
-                    </i>
+                    <span class="count" id="count-unread"></span>
                 </div>
                 <div class="unread-text">Buku sedang dibaca.</div>
             </div>
             <div class="read-books">
                 <div class="read-progress">
-                    <i class='bx bxs-circle'>
-                        <span class="count"></span>
-                    </i>
+                    <span class="count" id="count-read"></span>
                 </div>
                 <div class="read-text">Buku selesai dibaca.</div>
             </div>
@@ -55,7 +51,7 @@
                     </ul>
                 </div>
                 <div class="search-bar">
-                    
+                    <input id="search" type="text" placeholder="Cari..">
                 </div>
             </div>
             <div id="default-page"></div>
@@ -77,6 +73,14 @@
                     <button id="form-submit-button" type="submit" value="Submit" name="Submit"></button>
                 </div>
             </form>
+        </div>
+        <div class="modal" id="delete-modal">
+            <h4 class="modal-title">Hapus buku?</h4>
+            <p class="modal-body">Setelah dihapus, buku tidak dapat dikembalikan.</p>
+            <div class="modal-button">
+                <button id="back-button">Kembali</button>
+                <button id="delete-button">Hapus</button>
+            </div>
         </div>
         <script src="js/script.js"></script>
     </body>
