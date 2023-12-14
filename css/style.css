@@ -7,7 +7,10 @@
     margin: 0;
     font-family: 'Poppins', sans-serif;
 }
-
+.home-section.blur {
+    filter: blur(5px);
+    pointer-events: none;
+}
 /* sidebar */
 .sidebar {
     position: fixed;
@@ -181,6 +184,9 @@
     border-radius: 20px;
     min-width: 170px;
 }
+.tab {
+    transition: all 0.2s ease;
+}
 .search-bar {
     flex-basis: 50%;
     padding: 20px;
@@ -207,31 +213,23 @@
     position: relative;
     left: -5%;
 }
-.main-page {
-    flex-basis: 70%;
-    display: flex;
+#default-page {
     flex-direction: column;
     align-items: center;
-    min-width: 190vh;
-    min-height: 80vh;
-    border: 2px solid red;
-    visibility: hidden;
-}
-.deafult-page {
-    flex-basis: 100%;
+    justify-content: center;
+    width: 100%;
+    height: 70vh;
     text-align: center;
-    visibility: hidden;
     /* border: 2px solid black; */
 }
-.deafult-page-text {
+#deafult-page-text {
     font-size: 13px;
 }
 
 /* sedang baca container */
-.panel {
+#content-container {
     display: grid;
-    grid-template-columns: repeat(var(--column-count),minmax(0,1fr));
-    --column-count: 5;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 1rem;
     width: 100%;
     padding: 0 20px;
@@ -247,10 +245,10 @@
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
-    padding: 7px 25px;
+    padding: 4px 16px;
     width: 100%;
-    max-width: 225px;
-    min-height: 226px;
+    width: 226px;
+    height: 236px;
     background-color: #FCE2DB;
     border-radius: 25px;
     font-size: 12px;
@@ -258,32 +256,42 @@
     text-align: center;
     justify-content: space-between;
     color: #7A4495;
+    opacity: 0;
+    transform: translateY(20px) scale(0.1);
+    transition: opacity 0.2s ease, transform 0.2s ease;
     /* border: 2px solid black; */
 }
-.book-details .book-name {
-    display: flex;
-    width: 100%;
-    max-height: 65px;
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 5px;
-    word-wrap: break-word;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    justify-content: center;
-    align-items: center;
-    /* border: 2px solid red; */
+.books-container.show{
+    opacity: 1;
+    transform: translateY(0);
 }
+.book-details .book-name {
+    width: 100%;
+    height: 65px;
+    /* line-height: 40px; */
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 4px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
 .book-details .book-author,
 .book-details .book-year {
-    min-height: 23px;
-    font-size: 0.8125rem;
+    flex-basis: 25%;
+    /* min-height: 23px; */
+    font-size: 0.9rem;
     font-weight: 400;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Number of lines to show */
+    -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    box-sizing: border-box;
     /* border: 2px solid red; */
 }
 .book-author{
@@ -297,13 +305,11 @@
 .book-details {
     flex-basis: 80%;
     width: 100%;
-    min-width: 195px;
     min-height: 139px;
     margin: 10px;
-    padding: 15px 0;
+    padding: 12px;
     background-color: #FFF7F5;
     border-radius: 20px;
-    /* border: 2px solid black; */
 }
 .icons {
     flex-basis: 20%;
@@ -331,14 +337,14 @@
     box-shadow: 0px 2px 5px 0px rgba(44,59,80,0.25);
     position: absolute;
     top: 50%;
-    transform: translateY(-50%) scale(0.1);
+    transform: translateY(-50%) translateX(175%) scale(0.1);
     z-index: 10;
     visibility: hidden;
-    transition: transform 0.3s;
+    transition: transform 0.1s;
 }
 .open-popup {
     visibility: visible;
-    transform: translateY(-50%) scale(1);
+    transform: translateY(-50%) translateX(175%) scale(1);
 }
 .add-book-form h1 {
     font-size: 16px;
@@ -371,7 +377,7 @@
     margin: 10px;
     padding: 0px;
 }
-.form-container .form-checkbox {
+#form-container .form-checkbox {
     width: 20px;
 }
 .form-button {
