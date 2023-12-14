@@ -208,7 +208,7 @@ const editBook = (book, tab) => {
     
     title.value = book.title;
     author.value = book.author;
-    year.value = book.year;
+    parseInt(year.value, 10) = book.year;
     isComplete.checked = book.isComplete;
 
     addBookForm.classList.add('open-popup');
@@ -282,7 +282,7 @@ const addBook = () => {
     const idBook = `book_${Date.now()}`;
     const title = document.getElementById("book-title").value;
     const author = document.getElementById("book-author").value;
-    const year = document.getElementById("book-year").value;
+    const year = parseInt(document.getElementById("book-year").value, 10);
     const isComplete = document.getElementById("selesai-baca").checked;
     const bookObject = {idBook, title, author, year, isComplete};
    
