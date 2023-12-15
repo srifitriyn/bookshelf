@@ -139,7 +139,7 @@ const renderBooks = (tab) => {
                 const completeIcon = bookElement.querySelectorAll('.complete-icon');
                 deleteIcon.forEach((icon) => {
                     icon.addEventListener('click', () => {
-                        deleteAlert(book);
+                        deleteAlert(book, tab);
                     });
                 });
                 editIcon.forEach((icon) => {
@@ -171,7 +171,6 @@ const renderBooks = (tab) => {
 
 // Delete book
 const deleteAlert = (book, tab) => {
-    const bookId = book.idBook;
     const deleteModal = document.getElementById("delete-modal");
     const backButton = document.getElementById('back-button');
     const deleteButton = document.getElementById('delete-button');
@@ -180,21 +179,26 @@ const deleteAlert = (book, tab) => {
         deleteModal.classList.remove('open-popup')
     })
     deleteButton.addEventListener('click', () => {
-        const storedBooks = getStoredBooks() || [];
-        const updatedBooks = storedBooks.filter((storedBook) => storedBook.idBook !== bookId);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedBooks));
-        const booksContainer = document.getElementById('content-container');
-        const bookElements = booksContainer.querySelectorAll('.books-container');
-        bookElements.forEach((element) => {
-            const elementId = element.dataset.idBook;
-            if (elementId === bookId) {
-                element.remove();
-            }
-        });
-        renderBooks(tab);
-        countBooks();
-        deleteModal.classList.remove('open-popup')
+        deleteBook(book, tab);
     });
+};
+const deleteBook = (book, tab) => {
+    const deleteModal = document.getElementById("delete-modal");
+    const bookId = book.idBook;
+    const storedBooks = getStoredBooks() || [];
+    const updatedBooks = storedBooks.filter((storedBook) => storedBook.idBook !== bookId);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedBooks));
+    const booksContainer = document.getElementById('content-container');
+    const bookElements = booksContainer.querySelectorAll('.books-container');
+    bookElements.forEach((element) => {
+        const elementId = element.dataset.idBook;
+        if (elementId === bookId) {
+            element.remove();
+        }
+    });
+    renderBooks(tab);
+    countBooks();
+    deleteModal.classList.remove('open-popup')
 }
 
 //Edit book
@@ -208,7 +212,7 @@ const editBook = (book, tab) => {
     
     title.value = book.title;
     author.value = book.author;
-    parseInt(year.value, 10) = book.year;
+    year.value = book.year
     isComplete.checked = book.isComplete;
 
     addBookForm.classList.add('open-popup');
@@ -217,6 +221,9 @@ const editBook = (book, tab) => {
     saveButton.innerHTML = "Simpan";
 
     saveButton.addEventListener('click', () => {
+        if (!title.value || !author.value || !year.value) {
+            return;
+        }
         const storedBook = getStoredBooks() || [];
         const updatedBooks = storedBook.map((bookItem) => {
             if (bookItem.idBook === bookId) {
@@ -224,9 +231,9 @@ const editBook = (book, tab) => {
                     ...bookItem,
                     title: title.value,
                     author: author.value,
-                    year: year.value,
+                    year: parseInt(year.value, 10),
                     isComplete: isComplete.checked,
-                }
+                };
             }
             return bookItem;
         });
