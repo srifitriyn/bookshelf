@@ -345,33 +345,58 @@ const search = document.getElementById('search');
 search.addEventListener('input', handleSearch);
 function handleSearch() {
     const searchTerm = search.value.toLowerCase();
-    const storedBooks = getStoredBooks() || [];
-    if (searchTerm === '' && storedBooks.length === 0) {
-        renderBooks();
-    } else if (searchTerm === '' && storedBooks.length > 0) {
-        const activeTab = document.querySelector('.tabs li.active');
-        const currentPanel = activeTab ? activeTab.dataset.target : 'panel_one';
-        const defaultPage = document.getElementById('default-page');
-    const contentContainer = document.getElementById('content-container');
-        renderBooks(currentPanel);
-        defaultPage.style.display ='none';
-        contentContainer.style.display = 'grid';
-    } else {
+    // const storedBooks = getStoredBooks() || [];
+    // if (searchTerm === '' && storedBooks.length === 0) {
+    //     renderBooks();
+    // } else if (searchTerm === '' && storedBooks.length > 0) {
+    //     const activeTab = document.querySelector('.tabs li.active');
+    //     const currentPanel = activeTab ? activeTab.dataset.target : 'panel_one';
+    //     const defaultPage = document.getElementById('default-page');
+    //     const contentContainer = document.getElementById('content-container');
+    //     renderBooks(currentPanel, filteredBooks);
+    //     defaultPage.style.display ='none';
+    //     contentContainer.style.display = 'grid';
+    // } else {
+    //     searchResult(searchTerm);
+    // }
+    if (searchTerm === '') {
+        clearSearch();
+    } else  {
         searchResult(searchTerm);
     }
 }
-function searchResult(searchTerm) {
-    const storedBooks = getStoredBooks() || [];
-    const filteredBooks = storedBooks.filter(bookItem => {
-        const titleMatch = bookItem.title.toLowerCase().includes(searchTerm);
-        const authorMatch = bookItem.author.toLowerCase().includes(searchTerm);
-        const yearMatch = bookItem.year.toLowerCase().includes(searchTerm);
-        return titleMatch || authorMatch || yearMatch;
-    });
+
+function clearSearch() {
     const activeTab = document.querySelector('.tabs li.active');
     const currentPanel = activeTab ? activeTab.dataset.target : 'panel_one';
     const defaultPage = document.getElementById('default-page');
     const contentContainer = document.getElementById('content-container');
+
+    renderBooks(currentPanel);
+    defaultPage.style.display = 'none';
+    contentContainer.style.display = 'grid';
+}
+
+function searchResult(searchTerm) {
+    const storedBooks = getStoredBooks() || [];
+    const activeTab = document.querySelector('.tabs li.active');
+    const currentPanel = activeTab ? activeTab.dataset.target : 'panel_one';
+
+    const filteredBooks = storedBooks.filter(bookItem => {
+        const titleMatch = bookItem.title.toLowerCase().includes(searchTerm);
+        const authorMatch = bookItem.author.toLowerCase().includes(searchTerm);
+        const yearMatch = bookItem.year.toString().toLowerCase().includes(searchTerm);
+        
+        if (currentPanel === 'panel_one') {
+            return (!bookItem.isComplete) && (titleMatch || authorMatch || yearMatch);
+        } else if (currentPanel === 'panel_two') {
+            return (bookItem.isComplete) && (titleMatch || authorMatch || yearMatch);
+        }
+    });
+
+    const defaultPage = document.getElementById('default-page');
+    const contentContainer = document.getElementById('content-container');
+
     if (filteredBooks.length > 0) {
         renderBooks(currentPanel, filteredBooks);
         defaultPage.style.display = 'none';
