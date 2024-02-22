@@ -290,7 +290,6 @@ const addBook = () => {
     const title = document.getElementById("book-title").value;
     const author = document.getElementById("book-author").value;
     const year = parseInt(document.getElementById("book-year").value, 10);
-    const year = parseInt(document.getElementById("book-year").value, 10);
     const isComplete = document.getElementById("selesai-baca").checked;
     const bookObject = {idBook, title, author, year, isComplete};
    
