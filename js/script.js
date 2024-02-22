@@ -290,6 +290,7 @@ const addBook = () => {
     const title = document.getElementById("book-title").value;
     const author = document.getElementById("book-author").value;
     const year = parseInt(document.getElementById("book-year").value, 10);
+    const year = parseInt(document.getElementById("book-year").value, 10);
     const isComplete = document.getElementById("selesai-baca").checked;
     const bookObject = {idBook, title, author, year, isComplete};
    
@@ -345,20 +346,6 @@ const search = document.getElementById('search');
 search.addEventListener('input', handleSearch);
 function handleSearch() {
     const searchTerm = search.value.toLowerCase();
-    // const storedBooks = getStoredBooks() || [];
-    // if (searchTerm === '' && storedBooks.length === 0) {
-    //     renderBooks();
-    // } else if (searchTerm === '' && storedBooks.length > 0) {
-    //     const activeTab = document.querySelector('.tabs li.active');
-    //     const currentPanel = activeTab ? activeTab.dataset.target : 'panel_one';
-    //     const defaultPage = document.getElementById('default-page');
-    //     const contentContainer = document.getElementById('content-container');
-    //     renderBooks(currentPanel, filteredBooks);
-    //     defaultPage.style.display ='none';
-    //     contentContainer.style.display = 'grid';
-    // } else {
-    //     searchResult(searchTerm);
-    // }
     if (searchTerm === '') {
         clearSearch();
     } else  {
