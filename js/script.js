@@ -354,7 +354,7 @@ const countBooks = () => {
 // Search books by name, author, or year
 const search = document.getElementById("search");
 search.addEventListener("input", handleSearch);
-function handleSearch() {
+const handleSearch = () => {
   const searchTerm = search.value.toLowerCase();
   if (searchTerm === "") {
     clearSearch();
@@ -363,7 +363,8 @@ function handleSearch() {
   }
 }
 
-function clearSearch() {
+// clear search results
+const clearSearch = () => {
   const activeTab = document.querySelector(".tabs li.active");
   const currentPanel = activeTab ? activeTab.dataset.target : "panel_one";
   const defaultPage = document.getElementById("default-page");
@@ -372,7 +373,9 @@ function clearSearch() {
   defaultPage.style.display = "none";
   contentContainer.style.display = "grid";
 }
-function searchResult(searchTerm) {
+
+// show search results
+const searchResult = (searchTerm) => {
   const storedBooks = getStoredBooks() || [];
   const filteredBooks = storedBooks.filter((bookItem) => {
     const titleMatch = bookItem.title.toLowerCase().includes(searchTerm);
