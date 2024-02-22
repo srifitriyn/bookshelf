@@ -352,8 +352,6 @@ const countBooks = () => {
 };
 
 // Search books by name, author, or year
-const search = document.getElementById("search");
-search.addEventListener("input", handleSearch);
 const handleSearch = () => {
   const searchTerm = search.value.toLowerCase();
   if (searchTerm === "") {
@@ -361,30 +359,30 @@ const handleSearch = () => {
   } else {
     searchResult(searchTerm);
   }
-}
-
-// clear search results
-const clearSearch = () => {
-  const activeTab = document.querySelector(".tabs li.active");
-  const currentPanel = activeTab ? activeTab.dataset.target : "panel_one";
-  const defaultPage = document.getElementById("default-page");
-  const contentContainer = document.getElementById("content-container");
-  renderBooks(currentPanel);
-  defaultPage.style.display = "none";
-  contentContainer.style.display = "grid";
-}
+};
+const search = document.getElementById("search");
+search.addEventListener("input", handleSearch);
 
 // show search results
 const searchResult = (searchTerm) => {
   const storedBooks = getStoredBooks() || [];
+  const activeTab = document.querySelector(".tabs li.active");
+  const currentPanel = activeTab ? activeTab.dataset.target : "panel_one";
   const filteredBooks = storedBooks.filter((bookItem) => {
     const titleMatch = bookItem.title.toLowerCase().includes(searchTerm);
     const authorMatch = bookItem.author.toLowerCase().includes(searchTerm);
-    const yearMatch = bookItem.year.toLowerCase().includes(searchTerm);
-    return titleMatch || authorMatch || yearMatch;
+    const yearMatch = bookItem.year
+      .toString()
+      .toLowerCase()
+      .includes(searchTerm);
+
+    if (currentPanel === "panel_one") {
+      return !bookItem.isComplete && (titleMatch || authorMatch || yearMatch);
+    } else if (currentPanel === "panel_two") {
+      return bookItem.isComplete && (titleMatch || authorMatch || yearMatch);
+    }
   });
-  const activeTab = document.querySelector(".tabs li.active");
-  const currentPanel = activeTab ? activeTab.dataset.target : "panel_one";
+
   const defaultPage = document.getElementById("default-page");
   const contentContainer = document.getElementById("content-container");
   if (filteredBooks.length > 0) {
@@ -393,10 +391,26 @@ const searchResult = (searchTerm) => {
     contentContainer.style.display = "grid";
   } else {
     defaultPage.innerHTML = `
-            <img src="assets/warn icon.svg" alt="" width="30px">
-            <div class="default-page-text">Buku tidak ditemukan. Coba cari lagi, ya.</div>
-        `;
+          <img src="assets/warn icon.svg" alt="" width="30px">
+          <div class="default-page-text">Buku tidak ditemukan. Coba cari lagi, ya.</div>
+      `;
     defaultPage.style.display = "flex";
     contentContainer.style.display = "none";
   }
-}
+};
+
+// clear search results
+const clearSearch = () => {
+  const activeTab = document.querySelector(".tabs li.active");
+  const currentPanel = activeTab ? activeTab.dataset.target : "panel_one";
+  const defaultPage = document.getElementById("default-page");
+  const contentContainer = document.getElementById("content-container");
+  if (contentContainer.children.length === 0 && currentPanel === contentContainer.dataset.target) {
+    defaultPage.style.display = "flex";
+    contentContainer.style.display = "none";
+  } else {
+    defaultPage.style.display = "none";
+    contentContainer.style.display = "grid";
+  }
+  renderBooks(currentPanel);
+};
